@@ -1,10 +1,10 @@
 import 'antd/dist/antd.css';
-import BirdWatcher from './BirdWatcher';
+import AppRoutes from './routes';
 
 function App() {
   return (
     <div className="App">
-      <BirdWatcher />
+      <AppRoutes />
     </div>
   );
 }
