@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { AuthContext } from 'AuthContext';
 
-function ProtectedRoute({ isAuth, children }) {
+function ProtectedRoute({ children }) {
+  const { isAuth } = useContext(AuthContext);
+
   if (!isAuth) {
     return <Navigate to="/forbidden" replace />;
   }
@@ -9,12 +13,7 @@ function ProtectedRoute({ isAuth, children }) {
   return children;
 }
 
-ProtectedRoute.defaultProps = {
-  isAuth: false,
-};
-
 ProtectedRoute.propTypes = {
-  isAuth: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
