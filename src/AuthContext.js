@@ -1,5 +1,4 @@
-import { createContext, useState, useMemo, useEffect } from 'react';
-import { gql, GraphQLClient } from 'graphql-request';
+import { createContext, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 export const AuthContext = createContext({
@@ -10,6 +9,10 @@ export function AuthProvider({ children }) {
   const [isAuth, setIsAuth] = useState(false);
   const value = useMemo(() => ({ isAuth, setIsAuth }), [isAuth]);
 
+  // TODO: `I've tried to persist the user's authentication between page refreshes, but for some reason, It didn't work.
+  // Auth cookie is changing after page refresh. Also, I found 'accessToken' query in the docs, but probably It's related to'Tenants'.`
+
+  /*
   useEffect(() => {
     (async function checkLoginSession() {
       const endpoint = 'https://iot.dimensionfour.io/graph';
@@ -33,6 +36,7 @@ export function AuthProvider({ children }) {
       }
     })();
   }, []);
+  */
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
