@@ -1,5 +1,5 @@
 import { Result, Button } from 'antd';
-import { useLocation } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 
 function Error() {
   const { pathname } = useLocation();
@@ -23,9 +23,9 @@ function Error() {
       title={config.title}
       subTitle={config.subTitle}
       extra={
-        <Button href="/" type="primary">
-          Go to Main Page
-        </Button>
+        <NavLink to="/">
+          <Button type="primary">Go to Main Page</Button>
+        </NavLink>
       }
     />
   );
