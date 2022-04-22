@@ -1,22 +1,26 @@
-import { createContext, useState, useMemo } from 'react';
+import { createContext, useState, useMemo, useLayoutEffect } from 'react';
+import { gql, GraphQLClient } from 'graphql-request';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export const AuthContext = createContext({
-  isAuth: false,
+  isAuth: null,
   setIsAuth: () => {},
 });
+
 export function AuthProvider({ children }) {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(null);
   const value = useMemo(() => ({ isAuth, setIsAuth }), [isAuth]);
+  const navigate = useNavigate();
 
-  // TODO: `I've tried to persist the user's authentication between page refreshes, but for some reason, It didn't work.
-  // Auth cookie is changing after page refresh. Also, I found 'accessToken' query in the docs, but probably It's related to'Tenants'.`
-
-  /*
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async function checkLoginSession() {
-      const endpoint = 'https://iot.dimensionfour.io/graph';
-      const graphQLClient = new GraphQLClient(endpoint, { headers: { credentials: 'include' } });
+      const endpoint = '/graph';
+      const graphQLClient = new GraphQLClient(endpoint, {
+        headers: {},
+        credentials: 'include',
+        mode: 'cors',
+      });
 
       const query = gql`
         query PROFILE {
@@ -29,14 +33,16 @@ export function AuthProvider({ children }) {
       try {
         await graphQLClient.request(query);
         setIsAuth(true);
+        navigate('/bird-watcher');
       } catch (error) {
         const { response } = JSON.parse(JSON.stringify(error));
         // eslint-disable-next-line no-console
         console.error(response.errors[0].message);
+        setIsAuth(false);
+        navigate('/');
       }
     })();
   }, []);
-  */
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
