@@ -10,8 +10,12 @@ function LoginForm() {
   const navigate = useNavigate();
 
   async function onFinish(values) {
-    const endpoint = 'https://iot.dimensionfour.io/graph';
-    const graphQLClient = new GraphQLClient(endpoint, { headers: { credentials: 'include' } });
+    const endpoint = '/graph';
+    const graphQLClient = new GraphQLClient(endpoint, {
+      headers: {},
+      credentials: 'include',
+      mode: 'cors',
+    });
 
     const mutation = gql`
       mutation LOG_IN($email: String!, $password: String!) {

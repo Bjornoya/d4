@@ -10,8 +10,8 @@ const BirdWatcher = lazy(() => import('./BirdWatcher'));
 
 function AppRoutes() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <Suspense fallback={<Spin />}>
           <Routes>
             <Route exact path="/" element={<MainPage />} />
@@ -26,8 +26,8 @@ function AppRoutes() {
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Suspense>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

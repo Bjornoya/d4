@@ -6,7 +6,7 @@ import { AuthContext } from 'AuthContext';
 function ProtectedRoute({ children }) {
   const { isAuth } = useContext(AuthContext);
 
-  if (!isAuth) {
+  if (isAuth === false) {
     return <Navigate to="/forbidden" replace />;
   }
 
