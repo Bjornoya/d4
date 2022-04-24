@@ -7,6 +7,7 @@ import { AuthProvider } from './AuthContext';
 
 const MainPage = lazy(() => import('./MainPage'));
 const BirdWatcher = lazy(() => import('./BirdWatcher'));
+const Spaces = lazy(() => import('./Spaces'));
 
 function AppRoutes() {
   return (
@@ -15,6 +16,7 @@ function AppRoutes() {
         <Suspense fallback={<Spin />}>
           <Routes>
             <Route exact path="/" element={<MainPage />} />
+            <Route exact path="/spaces" element={<Spaces />} />
             <Route
               path="/bird-watcher"
               element={
