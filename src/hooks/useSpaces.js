@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { gql, GraphQLClient } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 import { notification } from 'antd';
 
-function useSpaces(
-  params = `where: {}, paginate: { first: 20 }, sort: { field: "id", order: ASC }`
-) {
+function useSpaces(query) {
   const [spaces, setSpaces] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -19,19 +17,6 @@ function useSpaces(
       mode: 'cors',
     });
 
-    const query = gql`
-      query SPACES {
-        spaces(${params}) {
-          nodes {
-            name
-            normalizedName
-            createdAt
-            updatedAt
-            id
-          }
-        }
-      }
-    `;
     try {
       setLoading(true);
       const { spaces: data } = await graphQLClient.request(query, values);
