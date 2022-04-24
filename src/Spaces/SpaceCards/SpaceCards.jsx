@@ -15,7 +15,7 @@ function SpaceCards({ spaces, loading }) {
           style={{ width: 300, marginTop: 16, marginRight: 16 }}
           loading={loading}
         >
-          <NavLink to={`/${space.normalizedName}`}>
+          <NavLink to={`/spaces/${space.normalizedName}`}>
             <Meta
               avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
               title={space.name}
