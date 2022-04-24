@@ -1,49 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { gql, GraphQLClient } from 'graphql-request';
-import { notification } from 'antd';
+import useSpaces from 'hooks/useSpaces';
 import Layout from 'components/Layout';
 import SpaceModal from './SpaceModal';
 import SpaceCards from './SpaceCards';
 
 function Spaces() {
-  const [spaces, setSpaces] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const getSpaces = async (values) => {
-    const endpoint = '/graph';
-    const graphQLClient = new GraphQLClient(endpoint, {
-      headers: {
-        'x-tenant-id': process.env.REACT_APP_TENANT_ID,
-        'x-tenant-key': process.env.REACT_APP_TENANT_KEY,
-      },
-      credentials: 'include',
-      mode: 'cors',
-    });
-
-    const query = gql`
-      query SPACES {
-        spaces(where: {}, paginate: { first: 20 }, sort: { field: "id", order: ASC }) {
-          nodes {
-            name
-            normalizedName
-            createdAt
-            updatedAt
-            id
-          }
-        }
-      }
-    `;
-    try {
-      setLoading(true);
-      const { spaces: data } = await graphQLClient.request(query, values);
-      setSpaces(data.nodes);
-    } catch (error) {
-      const { response } = JSON.parse(JSON.stringify(error));
-      notification.error({ message: response.errors[0].message, key: 'getSpacesError' });
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { spaces, loading, getSpaces } = useSpaces();
 
   useEffect(() => {
     getSpaces();
