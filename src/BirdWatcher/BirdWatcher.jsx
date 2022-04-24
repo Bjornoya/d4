@@ -1,7 +1,11 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { Layout as AntLayout, Menu } from 'antd';
 import Dashboard from './Dashboard';
 import BirdForm from './BirdForm/BirdForm';
+
+const { Header } = AntLayout;
 
 function BirdWatcher() {
   const dashboardReference = useRef();
@@ -14,12 +18,24 @@ function BirdWatcher() {
   };
 
   return (
-    <Container>
-      <BirdForm onFinish={onFinish} />
-      <DashboardWrapper>
-        <Dashboard ref={dashboardReference} />
-      </DashboardWrapper>
-    </Container>
+    <>
+      <Header>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']}>
+          <Menu.Item key="home">
+            <NavLink to="/bird-watcher">Home</NavLink>
+          </Menu.Item>
+          <Menu.Item key="spaces">
+            <NavLink to="/spaces">Spaces</NavLink>
+          </Menu.Item>
+        </Menu>
+      </Header>
+      <Container>
+        <BirdForm onFinish={onFinish} />
+        <DashboardWrapper>
+          <Dashboard ref={dashboardReference} />
+        </DashboardWrapper>
+      </Container>
+    </>
   );
 }
 
