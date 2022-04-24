@@ -46,7 +46,7 @@ function SpacePage() {
 
   useEffect(() => {
     getSpaces();
-  }, []);
+  }, [path.name]);
 
   return (
     <Layout>
