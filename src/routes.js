@@ -8,6 +8,7 @@ import { AuthProvider } from './AuthContext';
 const MainPage = lazy(() => import('./MainPage'));
 const BirdWatcher = lazy(() => import('./BirdWatcher'));
 const Spaces = lazy(() => import('./Spaces'));
+const SpacePage = lazy(() => import('./Spaces/SpacePage'));
 
 function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ function AppRoutes() {
           <Routes>
             <Route exact path="/" element={<MainPage />} />
             <Route exact path="/spaces" element={<Spaces />} />
+            <Route path="/spaces/:name" element={<SpacePage />} />
             <Route
               path="/bird-watcher"
               element={
