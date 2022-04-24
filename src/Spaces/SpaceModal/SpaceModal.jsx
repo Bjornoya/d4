@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, notification } from 'antd';
 import { gql, GraphQLClient } from 'graphql-request';
 import PropTypes from 'prop-types';
 
-function SpaceModal({ getSpaces }) {
+function SpaceModal({ getSpaces, parentId }) {
+  const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+
+  useEffect(() => {
+    if (parentId) {
+      form.setFieldsValue({ parentId });
+    }
+  }, [parentId]);
 
   const showModal = () => {
     setVisible(true);
@@ -77,6 +84,7 @@ function SpaceModal({ getSpaces }) {
         ]}
       >
         <Form
+          form={form}
           name="space"
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
@@ -100,8 +108,13 @@ function SpaceModal({ getSpaces }) {
   );
 }
 
+SpaceModal.defaultProps = {
+  parentId: '',
+};
+
 SpaceModal.propTypes = {
   getSpaces: PropTypes.func.isRequired,
+  parentId: PropTypes.string,
 };
 
 export default SpaceModal;
